@@ -20,6 +20,7 @@ class Scoreboard:
                 try:
                     button.config(text=int(text_entry.get()))
                     self.calculate_total_score()
+                    self.calculate_wins()
                     win.destroy()
                 except ValueError:
                     messagebox.showerror('Integer required', 'Score must be an integer.')
@@ -49,14 +50,51 @@ class Scoreboard:
     def calculate_total_score(self):
         for player in self.data.items():
             rounds = player[1][1:-2]
-            total = player[1][-2]
+            button = player[1][-2]
             score = sum([int(r['text']) for r in rounds if r['text'] != str()])
-            total['text'] = score
+            button['text'] = score
             
 
     def calculate_wins(self):
-        pass
-    
+        compare = list()
+        wins = dict()
+
+        for i in range(self.num_players):
+            wins[f'i{i}'] = 0
+
+        for i in range(self.num_rounds):
+            temp_list = list()
+            
+            for player in self.data.items():
+                rounds = player[1][1:-2]
+                temp_list.append(int(rounds[i]['text']) if rounds[i]['text'] != str() else 0)
+            
+            compare.append(temp_list)
+        
+        for round in compare:
+            scores = list()
+            topscore = 0
+            index = 0
+
+            for i in range(self.num_players):
+                scores.append(round[i])
+            
+            for score in scores:
+                if score > topscore:
+                    topscore = score
+            
+            for score in scores:
+                if score == topscore and score != 0:
+                    wins[f'i{index}'] += 1
+
+                index += 1
+
+        index = 0
+
+        for num in wins.values():
+            self.data[index][-1]['text'] = num
+            index += 1
+
 
     def run(self):
         self.root = Tk()

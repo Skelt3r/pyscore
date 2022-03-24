@@ -12,16 +12,6 @@ class Scoreboard:
         self.num_rounds = num_rounds
         self.num_players = num_players
         self.board = list()
-
-
-    def get_resolution(self):
-        temp = Toplevel()
-        temp.update_idletasks()
-        temp.wm_attributes('-fullscreen', True)
-        temp.state('iconic')
-        geo = temp.winfo_geometry()
-        temp.destroy()
-        return geo
     
 
     def set_value(self, button, prompt, int_only=False):
@@ -115,7 +105,6 @@ class Scoreboard:
     def run(self):
         self.root = Tk()
         self.root.title('Scoreboard')
-        self.root.geometry(self.get_resolution())
         self.root.wm_attributes('-topmost', True)
         self.root.wm_attributes('-fullscreen', True)
 
@@ -125,7 +114,7 @@ class Scoreboard:
         scoreboard_frame = Frame(bg_frame)
         scoreboard_frame.place(anchor='c', relx=0.5, rely=0.5)
 
-        x_button = Button(bg_frame, bd=2, relief='ridge', font=24, text='X', command=exit, padx=10, pady=10)
+        x_button = Button(bg_frame, bd=5, relief='ridge', font=('Arial', 12, 'bold'), text='X', command=exit, padx=5, pady=5)
         x_button.pack(padx=5, pady=5, side='top', anchor='ne')
 
         header_frame = Frame(scoreboard_frame, bg=self.bg_color)

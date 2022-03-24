@@ -28,6 +28,9 @@ class Scoreboard:
             else:
                 button.config(text=text_entry.get())
                 win.destroy()
+        
+        def cancel(event=None):
+            win.destroy()
 
         win = Toplevel(self.root)
         win.title('Name')
@@ -42,11 +45,11 @@ class Scoreboard:
         button_frame.pack(anchor='c', side='top')
 
         Button(button_frame, text='OK', command=ok).pack(anchor='c', padx=5, pady=5, side='left')
-        Button(button_frame, text='Cancel', command=win.destroy).pack(anchor='c', padx=5, pady=5, side='left')
+        Button(button_frame, text='Cancel', command=cancel).pack(anchor='c', padx=5, pady=5, side='left')
 
         text_entry.focus()
         text_entry.bind('<Return>', ok)
-        text_entry.bind('<Escape>', win.destroy)
+        text_entry.bind('<Escape>', cancel)
 
 
     def calculate_total_score(self):

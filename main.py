@@ -115,19 +115,21 @@ class Scoreboard:
         bg_frame = Frame(self.root, bg=self.bg_color)
         bg_frame.pack(expand=True, fill='both')
 
-        scoreboard_frame = Frame(bg_frame)
-        scoreboard_frame.place(anchor='c', relx=0.5, rely=0.5)
-
         x_button = Button(bg_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='X', command=exit, padx=5, pady=5)
         x_button.pack(padx=5, pady=5, side='top', anchor='ne')
+
+        scoreboard_frame = Frame(bg_frame)
+        scoreboard_frame.place(anchor='c', relx=0.5, rely=0.5)
 
         header_frame = Frame(scoreboard_frame, bg=self.bg_color)
         header_frame.pack(side='top')
 
-        Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Name').pack(side='left', anchor='s')
+        name_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Name')
+        name_label.pack(side='left', anchor='s')
 
         for n in range(self.num_rounds):
-            Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'R{n+1}').pack(side='left', anchor='s')
+            round_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'R{n+1}')
+            round_label.pack(side='left', anchor='s')
 
         for p in range(self.num_players):
             temp_list = list()
@@ -156,14 +158,18 @@ class Scoreboard:
             temp_list.extend([temp_button3, temp_button4])
             self.board.extend([temp_list])
 
-        Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Score').pack(side='left', anchor='s')
-        Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Wins').pack(side='left', anchor='s')
+        score_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Score')
+        wins_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Wins')
+        score_label.pack(side='left', anchor='s')
+        wins_label.pack(side='left', anchor='s')
 
         button_frame = Frame(scoreboard_frame, bg=self.bg_color)
         button_frame.pack(side='bottom', expand=True, fill='both')
 
-        Button(button_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='Reset Board', pady=5).pack(side='left', anchor='c', expand=True, fill='x')
-        Button(button_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='End Game', pady=5).pack(side='left', anchor='c', expand=True, fill='x')
+        reset_button = Button(button_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='Reset Board', pady=5)
+        end_button = Button(button_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='End Game', pady=5)
+        reset_button.pack(side='left', anchor='c', expand=True, fill='x')
+        end_button.pack(side='left', anchor='c', expand=True, fill='x')
 
         self.data = dict(enumerate(self.board))
         

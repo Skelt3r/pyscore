@@ -1,5 +1,4 @@
 from tkinter import  Button, Entry, Frame, Label, messagebox, Tk, Toplevel
-from rich import print
 from sys import exit
 
 
@@ -7,12 +6,31 @@ class Scoreboard:
     def __init__(self, num_rounds, num_players):
         self.height = 6
         self.width = 12
+
         self.bg_color = 'black'
         self.fg_color = 'white'
+        
         self.button_font = ('Arial', 12, 'bold')
+        self.large_button_font = ('Arial', 36, 'bold')
+        self.logo_font = ('Terminal', 64, 'underline')
+
         self.num_rounds = num_rounds
         self.num_players = num_players
+
         self.board = list()
+        self.root = Tk()
+        self.root.title('PyScore')
+        self.root.wm_attributes('-topmost', True)
+        self.root.wm_attributes('-fullscreen', True)
+
+        self.bg_frame = Frame(self.root, bg=self.bg_color)
+        self.bg_frame.pack(expand=True, fill='both')
+
+        x_button = Button(self.bg_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='X', command=exit, padx=5, pady=5)
+        x_button.pack(padx=5, pady=5, side='top', anchor='ne')
+
+        self.generate_menu()
+        self.root.mainloop()
     
 
     def set_value(self, button, prompt, int_only=False):
@@ -102,26 +120,38 @@ class Scoreboard:
             index += 1
 
 
-    def menu(self):
-        pass
+    def reset_board(self):
+        self.board.clear()
+        self.scoreboard_frame.destroy()
+        self.generate_board()
+
+    
+    def end_game(self):
+        self.board.clear()
+        self.scoreboard_frame.destroy()
+        self.generate_menu()
+
+
+    def generate_menu(self):
+        self.logo_label = Label(self.bg_frame, bg=self.bg_color, fg=self.fg_color, font=self.logo_font, text='PyScore')
+        self.logo_label.place(relx=0.5, rely=0.3, anchor='c')
+
+        self.start_button = Button(self.bg_frame, command=self.generate_board, bd=5, relief='ridge', font=self.large_button_font, text='Start Game')
+        self.start_button.place(relx=0.5, rely=0.5, anchor='c')
+
+        self.exit_button = Button(self.bg_frame, command=exit, bd=5, relief='ridge', font=self.large_button_font, text='Exit')
+        self.exit_button.place(relx=0.5, rely=0.6, anchor='c')
     
 
-    def run(self):
-        self.root = Tk()
-        self.root.title('Scoreboard')
-        self.root.wm_attributes('-topmost', True)
-        self.root.wm_attributes('-fullscreen', True)
+    def generate_board(self):
+        self.logo_label.destroy()
+        self.start_button.destroy()
+        self.exit_button.destroy()
 
-        bg_frame = Frame(self.root, bg=self.bg_color)
-        bg_frame.pack(expand=True, fill='both')
+        self.scoreboard_frame = Frame(self.bg_frame)
+        self.scoreboard_frame.place(anchor='c', relx=0.5, rely=0.5)
 
-        x_button = Button(bg_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='X', command=exit, padx=5, pady=5)
-        x_button.pack(padx=5, pady=5, side='top', anchor='ne')
-
-        scoreboard_frame = Frame(bg_frame)
-        scoreboard_frame.place(anchor='c', relx=0.5, rely=0.5)
-
-        header_frame = Frame(scoreboard_frame, bg=self.bg_color)
+        header_frame = Frame(self.scoreboard_frame, bg=self.bg_color)
         header_frame.pack(side='top')
 
         name_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Name')
@@ -134,7 +164,7 @@ class Scoreboard:
         for p in range(self.num_players):
             temp_list = list()
 
-            temp_frame = Frame(scoreboard_frame)
+            temp_frame = Frame(self.scoreboard_frame)
             temp_frame.pack(side='top')
 
             temp_button1 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, text=f'Player {p+1}')
@@ -163,18 +193,16 @@ class Scoreboard:
         score_label.pack(side='left', anchor='s')
         wins_label.pack(side='left', anchor='s')
 
-        button_frame = Frame(scoreboard_frame, bg=self.bg_color)
+        button_frame = Frame(self.scoreboard_frame, bg=self.bg_color)
         button_frame.pack(side='bottom', expand=True, fill='both')
 
-        reset_button = Button(button_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='Reset Board', pady=5)
-        end_button = Button(button_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='End Game', pady=5)
+        reset_button = Button(button_frame, command=self.reset_board, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='Reset Board', pady=5)
+        end_button = Button(button_frame, command=self.end_game, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='End Game', pady=5)
         reset_button.pack(side='left', anchor='c', expand=True, fill='x')
         end_button.pack(side='left', anchor='c', expand=True, fill='x')
 
         self.data = dict(enumerate(self.board))
         
-        self.root.mainloop()
 
 if __name__ == '__main__':
-    scoreboard = Scoreboard(10, 4)
-    scoreboard.run()
+    scoreboard = Scoreboard(10, 10)

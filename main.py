@@ -1,5 +1,6 @@
 from tkinter import  Button, Entry, Frame, Label, messagebox, Tk, Toplevel
 from rich import print
+from sys import exit
 
 
 class Scoreboard:
@@ -11,6 +12,16 @@ class Scoreboard:
         self.num_rounds = num_rounds
         self.num_players = num_players
         self.board = list()
+
+
+    def get_resolution(self):
+        temp = Toplevel()
+        temp.update_idletasks()
+        temp.wm_attributes('-fullscreen', True)
+        temp.state('iconic')
+        geo = temp.winfo_geometry()
+        temp.destroy()
+        return geo
     
 
     def set_value(self, button, prompt, int_only=False):
@@ -30,6 +41,7 @@ class Scoreboard:
 
         win = Toplevel(self.root)
         win.title('Name')
+        win.wm_attributes('-topmost', True)
 
         Label(win, text=prompt).pack(anchor='c', padx=5, pady=5, side='top')
 
@@ -96,16 +108,25 @@ class Scoreboard:
             index += 1
 
 
+    def menu(self):
+        pass
+    
+
     def run(self):
         self.root = Tk()
         self.root.title('Scoreboard')
-        self.root.geometry('1640x720')
+        self.root.geometry(self.get_resolution())
+        self.root.wm_attributes('-topmost', True)
+        self.root.wm_attributes('-fullscreen', True)
 
         bg_frame = Frame(self.root, bg=self.bg_color)
         bg_frame.pack(expand=True, fill='both')
 
         scoreboard_frame = Frame(bg_frame)
         scoreboard_frame.place(anchor='c', relx=0.5, rely=0.5)
+
+        x_button = Button(bg_frame, bd=2, relief='ridge', font=24, text='X', command=exit, padx=10, pady=10)
+        x_button.pack(padx=5, pady=5, side='top', anchor='ne')
 
         header_frame = Frame(scoreboard_frame, bg=self.bg_color)
         header_frame.pack(side='top')

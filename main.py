@@ -4,21 +4,20 @@ from sys import exit
 
 class Scoreboard:
     def __init__(self):
-        self.height = 6
-        self.width = 12
+        self.height = 4
+        self.width = 10
 
         self.bg_color = 'black'
         self.fg_color = 'white'
         
         self.button_font = ('Arial', 12, 'bold')
-        self.large_button_font = ('Arial', 36, 'bold')
+        self.large_button_font = ('Arial', 28, 'bold')
         self.logo_font = ('Terminal', 64, 'underline')
 
         self.board = list()
         
         self.root = Tk()
         self.root.title('PyScore')
-        self.root.wm_attributes('-topmost', True)
         self.root.wm_attributes('-fullscreen', True)
 
         self.bg_frame = Frame(self.root, bg=self.bg_color)
@@ -131,11 +130,11 @@ class Scoreboard:
 
 
     def generate_menu(self):
-        self.menu_frame = Frame(self.bg_frame, bg=self.bg_color)
+        self.menu_frame = Frame(self.bg_frame, bd=5, relief='ridge', bg=self.bg_color)
         self.menu_frame.place(relx=0.5, rely=0.5, anchor='c')
 
         self.logo_label = Label(self.menu_frame, bg=self.bg_color, fg=self.fg_color, font=self.logo_font, text='PyScore')
-        self.logo_label.pack(side='top', pady=40)
+        self.logo_label.pack(side='top', padx=40, pady=40)
 
         self.players_frame = Frame(self.menu_frame, bg=self.bg_color)
         self.players_frame.pack(side='top', pady=25)
@@ -144,30 +143,30 @@ class Scoreboard:
         self.rounds_frame.pack(side='top', pady=25)
 
         self.players_label = Label(self.players_frame, bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, text='Players:')
-        self.players_label.pack(side='left', anchor='w', padx=5, pady=10)
+        self.players_label.pack(side='left', padx=5, pady=10)
 
         self.rounds_label = Label(self.rounds_frame, bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, text='Rounds:')
-        self.rounds_label.pack(side='left', anchor='w', padx=5, pady=10)
+        self.rounds_label.pack(side='left', padx=5, pady=10)
 
         self.players_val = StringVar(self.menu_frame, '2')
         self.rounds_val = StringVar(self.menu_frame, '10')
         range_val = [i for i in range(1, 11)]
 
         self.players_opts = OptionMenu(self.players_frame, self.players_val, *range_val)
-        self.players_opts.config(font=self.large_button_font, width=2)
+        self.players_opts.config(bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, width=2)
         self.players_opts['menu'].config(font=self.large_button_font)
-        self.players_opts.pack(side='right', anchor='e', padx=5)
+        self.players_opts.pack(side='right', padx=10)
 
         self.rounds_opts = OptionMenu(self.rounds_frame, self.rounds_val, *range_val)
-        self.rounds_opts.config(font=self.large_button_font, width=2)
+        self.rounds_opts.config(bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, width=2)
         self.rounds_opts['menu'].config(font=self.large_button_font)
-        self.rounds_opts.pack(side='right', anchor='e', padx=5)
+        self.rounds_opts.pack(side='right', padx=10)
 
-        self.start_button = Button(self.menu_frame, command=self.generate_board, bd=5, relief='ridge', font=self.large_button_font, text='Start Game')
-        self.start_button.pack(side='left', anchor='c', padx=20, pady=50)
+        self.start_button = Button(self.menu_frame, command=self.generate_board, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.large_button_font, text='Start Game')
+        self.start_button.pack(side='left', anchor='c', padx=40, pady=50)
 
-        self.exit_button = Button(self.menu_frame, command=exit, bd=5, relief='ridge', font=self.large_button_font, text='Exit')
-        self.exit_button.pack(side='left', anchor='c', padx=20)
+        self.exit_button = Button(self.menu_frame, command=exit, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.large_button_font, text='Exit')
+        self.exit_button.pack(side='left', anchor='c', padx=40)
     
 
     def generate_board(self):
@@ -184,11 +183,11 @@ class Scoreboard:
         header_frame = Frame(self.scoreboard_frame, bg=self.bg_color)
         header_frame.pack(side='top')
 
-        name_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Name')
+        name_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, font=self.button_font, text=f'Name')
         name_label.pack(side='left', anchor='s')
 
         for n in range(self.num_rounds):
-            round_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'R{n+1}')
+            round_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, font=self.button_font, text=f'R{n+1}')
             round_label.pack(side='left', anchor='s')
 
         for p in range(self.num_players):
@@ -197,37 +196,37 @@ class Scoreboard:
             temp_frame = Frame(self.scoreboard_frame)
             temp_frame.pack(side='top')
 
-            temp_button1 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, text=f'Player {p+1}')
+            temp_button1 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, font=self.button_font, text=f'Player {p+1}')
             temp_button1.config(command=lambda b=temp_button1: self.set_value(b, 'Enter a player/team name:'))
             temp_button1.pack(side='left')
 
             temp_list.append(temp_button1)
 
             for n in range(self.num_rounds):
-                temp_button2 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width)
+                temp_button2 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, font=self.button_font,)
                 temp_button2.config(command=lambda b=temp_button2: self.set_value(b, 'Enter a score for this round:', True))
                 temp_button2.pack(side='left')
 
                 temp_list.append(temp_button2)
             
-            temp_button3 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, text='0')
-            temp_button4 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, text='0')
+            temp_button3 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, font=self.button_font, text='0')
+            temp_button4 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, font=self.button_font, text='0')
             temp_button3.pack(side='left')
             temp_button4.pack(side='left')
 
             temp_list.extend([temp_button3, temp_button4])
             self.board.extend([temp_list])
 
-        score_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Score')
-        wins_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, text=f'Wins')
+        score_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, font=self.button_font, text=f'Score')
+        wins_label = Label(header_frame, bd=4, bg=self.bg_color, fg=self.fg_color, height=self.height//2, width=self.width, font=self.button_font, text=f'Wins')
         score_label.pack(side='left', anchor='s')
         wins_label.pack(side='left', anchor='s')
 
         button_frame = Frame(self.scoreboard_frame, bg=self.bg_color)
         button_frame.pack(side='bottom', expand=True, fill='both')
 
-        reset_button = Button(button_frame, command=self.reset_board, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='Reset Board', pady=5)
-        end_button = Button(button_frame, command=self.end_game, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='End Game', pady=5)
+        reset_button = Button(button_frame, command=self.reset_board, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.large_button_font, text='Reset Board', pady=5)
+        end_button = Button(button_frame, command=self.end_game, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.large_button_font, text='End Game', pady=5)
         reset_button.pack(side='left', anchor='c', expand=True, fill='x')
         end_button.pack(side='left', anchor='c', expand=True, fill='x')
 

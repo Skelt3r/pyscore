@@ -15,6 +15,7 @@ class Scoreboard:
         self.logo_font = ('Terminal', 64, 'underline')
 
         self.board = list()
+        
         self.root = Tk()
         self.root.title('PyScore')
         self.root.wm_attributes('-topmost', True)
@@ -130,11 +131,11 @@ class Scoreboard:
 
 
     def generate_menu(self):
-        self.logo_label = Label(self.bg_frame, bg=self.bg_color, fg=self.fg_color, font=self.logo_font, text='PyScore')
-        self.logo_label.place(relx=0.5, rely=0.3, anchor='c')
-
         self.menu_frame = Frame(self.bg_frame, bg=self.bg_color)
-        self.menu_frame.place(relx=0.5, rely=0.525, anchor='c')
+        self.menu_frame.place(relx=0.5, rely=0.5, anchor='c')
+
+        self.logo_label = Label(self.menu_frame, bg=self.bg_color, fg=self.fg_color, font=self.logo_font, text='PyScore')
+        self.logo_label.pack(side='top', pady=40)
 
         self.players_frame = Frame(self.menu_frame, bg=self.bg_color)
         self.players_frame.pack(side='top', pady=25)
@@ -143,24 +144,24 @@ class Scoreboard:
         self.rounds_frame.pack(side='top', pady=25)
 
         self.players_label = Label(self.players_frame, bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, text='Players:')
-        self.players_label.pack(side='left', anchor='c', padx=5, pady=10)
+        self.players_label.pack(side='left', anchor='w', padx=5, pady=10)
 
         self.rounds_label = Label(self.rounds_frame, bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, text='Rounds:')
-        self.rounds_label.pack(side='left', anchor='c', padx=5, pady=10)
+        self.rounds_label.pack(side='left', anchor='w', padx=5, pady=10)
 
-        self.players_val = StringVar(self.menu_frame, '10')
+        self.players_val = StringVar(self.menu_frame, '2')
         self.rounds_val = StringVar(self.menu_frame, '10')
         range_val = [i for i in range(1, 11)]
 
         self.players_opts = OptionMenu(self.players_frame, self.players_val, *range_val)
         self.players_opts.config(font=self.large_button_font, width=2)
         self.players_opts['menu'].config(font=self.large_button_font)
-        self.players_opts.pack(side='right', anchor='c', padx=5)
+        self.players_opts.pack(side='right', anchor='e', padx=5)
 
         self.rounds_opts = OptionMenu(self.rounds_frame, self.rounds_val, *range_val)
         self.rounds_opts.config(font=self.large_button_font, width=2)
         self.rounds_opts['menu'].config(font=self.large_button_font)
-        self.rounds_opts.pack(side='right', anchor='c', padx=5)
+        self.rounds_opts.pack(side='right', anchor='e', padx=5)
 
         self.start_button = Button(self.menu_frame, command=self.generate_board, bd=5, relief='ridge', font=self.large_button_font, text='Start Game')
         self.start_button.pack(side='left', anchor='c', padx=20, pady=50)
@@ -173,7 +174,6 @@ class Scoreboard:
         self.num_players = int(self.players_val.get())
         self.num_rounds = int(self.rounds_val.get())
 
-        self.logo_label.destroy()
         self.menu_frame.destroy()
         self.start_button.destroy()
         self.exit_button.destroy()

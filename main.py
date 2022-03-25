@@ -93,12 +93,9 @@ class Scoreboard:
             compare.append(temp_list)
         
         for round in compare:
-            scores = list()
             topscore = 0
             index = 0
-
-            for i in range(self.num_players):
-                scores.append(round[i])
+            scores = [round[i] for i in range(self.num_players)]
             
             for score in scores:
                 if score > topscore:

@@ -24,7 +24,7 @@ class Scoreboard:
         self.bg_frame.pack(expand=True, fill='both')
 
         x_button = Button(self.bg_frame, bg=self.bg_color, fg=self.fg_color, bd=5, relief='ridge', font=self.button_font, text='X', command=exit, padx=5, pady=5)
-        x_button.pack(padx=5, pady=5, side='top', anchor='ne')
+        x_button.pack(side='top', anchor='ne')
 
         self.generate_menu()
         self.root.mainloop()

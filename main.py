@@ -49,7 +49,6 @@ class Scoreboard:
             win.destroy()
 
         win = Toplevel(self.root)
-        win.title('Name')
         win.wm_attributes('-topmost', True)
 
         Label(win, text=prompt).pack(anchor='c', padx=5, pady=5, side='top')

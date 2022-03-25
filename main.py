@@ -146,14 +146,15 @@ class Scoreboard:
 
         self.players_val = StringVar(self.menu_frame, '2')
         self.rounds_val = StringVar(self.menu_frame, '10')
-        range_val = [i for i in range(1, 11)]
+        players_range = [i for i in range(1, 11)]
+        rounds_range = [i for i in range(1, 16)]
 
-        self.players_opts = OptionMenu(self.players_frame, self.players_val, *range_val)
+        self.players_opts = OptionMenu(self.players_frame, self.players_val, *players_range)
         self.players_opts.config(bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, width=2)
         self.players_opts['menu'].config(font=self.large_button_font)
         self.players_opts.pack(side='right', padx=10)
 
-        self.rounds_opts = OptionMenu(self.rounds_frame, self.rounds_val, *range_val)
+        self.rounds_opts = OptionMenu(self.rounds_frame, self.rounds_val, *rounds_range)
         self.rounds_opts.config(bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, width=2)
         self.rounds_opts['menu'].config(font=self.large_button_font)
         self.rounds_opts.pack(side='right', padx=10)

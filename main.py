@@ -5,7 +5,7 @@ from sys import exit
 class Scoreboard:
     def __init__(self):
         self.height = 4
-        self.width = 10
+        self.width = 8
 
         self.bg_color = 'black'
         self.fg_color = 'white'

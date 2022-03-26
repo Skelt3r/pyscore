@@ -15,6 +15,9 @@ class Scoreboard:
         self.logo_font = ('Terminal', 64, 'underline')
 
         self.board = list()
+
+        self.players_val = '4'
+        self.rounds_val = '10'
         
         self.root = Tk()
         self.root.title('PyScore')
@@ -143,18 +146,18 @@ class Scoreboard:
 
         self.rounds_label = Label(self.rounds_frame, bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, text='Rounds:')
         self.rounds_label.pack(side='left', padx=5, pady=10)
-
-        self.players_val = StringVar(self.menu_frame, '2')
-        self.rounds_val = StringVar(self.menu_frame, '10')
+        
+        self.players_var = StringVar(self.menu_frame, self.players_val)
+        self.rounds_var = StringVar(self.menu_frame, self.rounds_val)
         players_range = [i for i in range(1, 11)]
         rounds_range = [i for i in range(1, 16)]
 
-        self.players_opts = OptionMenu(self.players_frame, self.players_val, *players_range)
+        self.players_opts = OptionMenu(self.players_frame, self.players_var, *players_range)
         self.players_opts.config(bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, width=2)
         self.players_opts['menu'].config(font=self.large_button_font)
         self.players_opts.pack(side='right', padx=10)
 
-        self.rounds_opts = OptionMenu(self.rounds_frame, self.rounds_val, *rounds_range)
+        self.rounds_opts = OptionMenu(self.rounds_frame, self.rounds_var, *rounds_range)
         self.rounds_opts.config(bg=self.bg_color, fg=self.fg_color, font=self.large_button_font, width=2)
         self.rounds_opts['menu'].config(font=self.large_button_font)
         self.rounds_opts.pack(side='right', padx=10)
@@ -167,8 +170,10 @@ class Scoreboard:
     
 
     def generate_board(self):
-        self.num_players = int(self.players_val.get())
-        self.num_rounds = int(self.rounds_val.get())
+        self.players_val = self.players_var.get()
+        self.rounds_val = self.rounds_var.get()
+        self.num_players = int(self.players_var.get())
+        self.num_rounds = int(self.rounds_var.get())
 
         self.menu_frame.destroy()
         self.start_button.destroy()

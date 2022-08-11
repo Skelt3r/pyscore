@@ -193,10 +193,11 @@ class Scoreboard:
             temp_list = list()
 
             temp_frame = Frame(self.scoreboard_frame)
-            temp_frame.pack(side='top')
-
             temp_button1 = Button(temp_frame, bg=self.bg_color, fg=self.fg_color, height=self.height, width=self.width, font=self.button_font, text=f'Player {p+1}')
+            
             temp_button1.config(command=lambda b=temp_button1: self.set_value(b, 'Enter a player/team name:'))
+            
+            temp_frame.pack(side='top')
             temp_button1.pack(side='left')
 
             temp_list.append(temp_button1)
